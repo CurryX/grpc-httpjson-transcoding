@@ -158,6 +158,10 @@ pbutil::Status TypeHelper::ResolveFieldPath(
   for (size_t i = 0; i < field_names.size(); ++i) {
     // Find the field by name in the current type
     auto field = Info()->FindField(current_type, field_names[i]);
+    if (current_type->name() == "google.api.HttpBody") {
+      field_path.clear();
+      break;
+    }
     if (nullptr == field) {
       return pbutil::Status(pberr::INVALID_ARGUMENT,
                             "Could not find field \"" + field_names[i] +
